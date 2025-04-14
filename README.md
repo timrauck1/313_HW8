@@ -6,8 +6,10 @@ FILES: a short description of the purpose of each of the files, e.g. includes, s
 
 hw8.cpp- Solves for D using the given equations and matrices utilizing classes, functions, and for loops
 
-hw8.c- Solves for D using the given equations and matrices utilizing for loops and functions.
+hw8.c- Solves for D using the given equations and matrices only utilizing for loops and functions.
 
 BUILD INSTRUCTIONS: 
 
 TESTING METHODOLOGY: 
+
+ADDITIONAL INFORMATION: 
