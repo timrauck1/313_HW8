@@ -1,15 +1,19 @@
 AUTHORING: Tim Rauck UMBC 313 Mon/Wed 10-11:15 4/14/2025
 
-PURPOSE OF SOFTWARE: Solve D = A(3*B) *C^T
+PURPOSE OF SOFTWARE: Creates matrices and does matrix equations involving matrix addition, matrix multiplication, and scalar matrix multiplication
 
-FILES: a short description of the purpose of each of the files, e.g. includes, source files, make file
+FILES: 
 
-hw8.cpp- Solves for D using the given equations and matrices utilizing classes, functions, and for loops
+hw8.cpp- Creates matrix objects with defined row and column size, allowing for matrix equations to be done on the matrices.
 
-hw8.c- Solves for D using the given equations and matrices only utilizing for loops and functions.
+hw8.c- Creates matrix objects with defined row and column size, allowing for matrix equations to be done on the matrices.
 
-BUILD INSTRUCTIONS: Created a C and C++ file to solve the equation. Created functions for matrix mulitplication and matrix addition.
+BUILD INSTRUCTIONS: 
 
-TESTING METHODOLOGY: Enter in the information for matrices A,B, and C and the files will both output D
+C++- created a matrix class that creates matrix objects with integer values for column and row sizes. Then created functions that allow for the matrix equations to be done to the matrix objects.
 
-ADDITIONAL INFORMATION: "gcc hw8.c -o hw8" or "gcc hw8.cpp hw8" to compile
+C-
+
+TESTING METHODOLOGY: Inputed the values for a,b, and c and did the matrix equations to create d, then printed out d to see if the equations were correct.
+
+ADDITIONAL INFORMATION: "gcc -std=c99 hw8.c -o hw8" or "g++ hw8.cpp -o hw8" to compile
