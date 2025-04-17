@@ -3,12 +3,15 @@
 
 class matrix{
     public:
+        
+        //default constructor
         matrix(){
             m_col = 0;
             m_row = 0;
             m_matrix = nullptr;
         }
         
+        //constructor
         matrix(int row, int col, int defaultValue){
             m_col = col;
             m_row = row;
@@ -23,6 +26,7 @@ class matrix{
             }
         }
 
+        //destructor
         ~matrix() {
             if (m_matrix != nullptr) {
                 for(int i = 0; i < m_row; i++) {
@@ -36,6 +40,7 @@ class matrix{
         int getCol() const{return m_col;}
         int getRow() const{return m_row;}
         
+        //multiplies the matrix by the integer passed through
         void multMatrixByInt(int integer){
             for(int i = 0; i < m_row; i++){
                 for(int j = 0; j < m_col; j++){
@@ -44,7 +49,9 @@ class matrix{
             }
         }
 
+        //adds the matrix with the matrix passed through
         void addMatrices(const matrix &matrixToAdd){
+            //the matrices have to be the same dimesions to add them together
             if(m_col != matrixToAdd.getCol() || m_row != matrixToAdd.getRow()){
                 printf("Matrix sizes don't match, can't add.");
             }else{
@@ -58,6 +65,7 @@ class matrix{
             
         }
         
+        //gets the value at a given coordinate in the matrix
         int getElement(int row, int col) const {
             if (row < 0 || row >= m_row || col < 0 || col >= m_col) {
                 printf("Index out of bounds");
@@ -65,6 +73,8 @@ class matrix{
             }
             return m_matrix[row][col];
         }
+        
+        //sets the value of the matrix
         void setElement(int row, int col, int value) {
             if (row < 0 || row >= m_row || col < 0 || col >= m_col) {
                 printf("Index out of bounds");
@@ -72,7 +82,10 @@ class matrix{
             m_matrix[row][col] = value;
         }
 
+        //multiples the two matrices passed in
         void multiplyMatrices(const matrix& matrixOne, const matrix& matrixTwo){
+            
+            //for it to be valid, the col size of matrix one has equal the row size of matrix two
             if(matrixOne.getCol() != matrixTwo.getRow()){
                 printf("Not a valid multiplication size");
                 return;
@@ -131,6 +144,7 @@ class matrix{
 
 };
 
+//prints the matrix passed in
 void printMatrix(const matrix &matrix){
     for(int i = 0; i < matrix.getRow(); i++){
         for(int j = 0; j < matrix.getCol(); j++){
@@ -158,3 +172,4 @@ int main(){
     return 0;
     
 }
+
