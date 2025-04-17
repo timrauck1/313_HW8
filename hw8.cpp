@@ -1,57 +1,160 @@
 #include <cstdio>
+#include <cstdlib>
 
-class matrixFunctions{
+class matrix{
     public:
-    
-    void addMatrices(int matrixOne[2][2], int matrixTwo[2][2],int matrixRow, int matrixCol){
-        for(int i = 0; i < matrixRow;i++){
-            for(int j = 0; j < matrixCol; j++){
-                matrixOne[i][j] = matrixOne[i][j]+matrixTwo[i][j];
-            }
+        matrix(){
+            m_col = 0;
+            m_row = 0;
+            m_matrix = nullptr;
         }
-    }
-    
-    void multiplyMatrices(int matrixOne[2][3], int matrixTwo[3][2],int matrixOneRow, int matrixOneCol
-    ,int matrixTwoRow, int matrixTwoCol, int result[2][2]){
-        for(int i = 0; i <= 1; i++){
-            for(int j = 0; j <= 1; j++){
-                for(int z = 0; z < 3; z++){
-                    result[i][j] += matrixOne[i][z] * matrixTwo[z][j];
+        
+        matrix(int row, int col, int defaultValue){
+            m_col = col;
+            m_row = row;
+            m_matrix = new int *[m_row];
+            for(int i = 0; i < m_row; i++){
+                m_matrix[i] = new int[m_col];
+            }
+            for(int i = 0; i < m_row; i++){
+                for(int j = 0; j < m_col; j++){
+                    m_matrix[i][j] = defaultValue;
                 }
             }
         }
-    }
 
-    void multiplyMatrixByInt(int integer, int matrix[2][3], int rows, int cols){
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j <cols; j++){
-                matrix[i][j] = matrix[i][j] * integer;
+        ~matrix() {
+            if (m_matrix != nullptr) {
+                for(int i = 0; i < m_row; i++) {
+                    delete[] m_matrix[i];
+                }
+                delete[] m_matrix;
             }
         }
-    }
-    
+        
+        //getters
+        int getCol() const{return m_col;}
+        int getRow() const{return m_row;}
+        
+        void multMatrixByInt(int integer){
+            for(int i = 0; i < m_row; i++){
+                for(int j = 0; j < m_col; j++){
+                    m_matrix[i][j] = m_matrix[i][j] * integer;
+                }
+            }
+        }
+
+        void addMatrices(const matrix &matrixToAdd){
+            if(m_col != matrixToAdd.getCol() || m_row != matrixToAdd.getRow()){
+                printf("Matrix sizes don't match, can't add.");
+            }else{
+                for(int i = 0; i < m_row; i++){
+                    for(int j = 0; j < m_col; j++){
+                        int matrixToAddValue = matrixToAdd.getElement(i,j);
+                        m_matrix[i][j] = m_matrix[i][j] + matrixToAddValue;
+                    }
+                }
+            }
+            
+        }
+        
+        int getElement(int row, int col) const {
+            if (row < 0 || row >= m_row || col < 0 || col >= m_col) {
+                printf("Index out of bounds");
+                return 0;
+            }
+            return m_matrix[row][col];
+        }
+        void setElement(int row, int col, int value) {
+            if (row < 0 || row >= m_row || col < 0 || col >= m_col) {
+                printf("Index out of bounds");
+            }
+            m_matrix[row][col] = value;
+        }
+
+        void multiplyMatrices(const matrix& matrixOne, const matrix& matrixTwo){
+            if(matrixOne.getCol() != matrixTwo.getRow()){
+                printf("Not a valid multiplication size");
+                return;
+            }
+            int matchingValue = matrixOne.getCol();
+            m_row = matrixOne.getRow();
+            m_col = matrixTwo.getCol();
+            
+            m_matrix = new int *[m_row];
+            for(int i = 0; i < m_row; i++){
+                m_matrix[i] = new int[m_col];
+            }
+            
+            for(int i = 0; i < m_row; i++){
+                for(int j = 0; j < m_col; j++){
+                    int m_sum = 0;
+                    for(int x =0; x < matchingValue; x++){
+                        int firstValue = matrixOne.getElement(i, x);
+                        int secondValue = matrixTwo.getElement(x, j);
+                        m_sum += (firstValue * secondValue);
+                        m_matrix[i][j] = m_sum;
+                    }
+                }
+            }
+            
+            
+        }
+
+        //FOR TESTING
+        void setValuesForA(){
+            m_matrix[0][0] =6;
+            m_matrix[0][1] =4;
+            m_matrix[1][0] =8;
+            m_matrix[1][1] =3;
+        }
+        void setValuesForB(){
+            m_matrix[0][0] = 1;
+            m_matrix[0][1] = 2;
+            m_matrix[0][2] = 3;
+            m_matrix[1][0] = 4;
+            m_matrix[1][1] = 5;
+            m_matrix[1][2] = 6;
+        }
+        void setValuesForC(){
+            m_matrix[0][0] = 2;
+            m_matrix[1][0] = 4;
+            m_matrix[2][0] = 6;
+            m_matrix[0][1] = 1;
+            m_matrix[1][1] = 3;
+            m_matrix[2][1] = 5;
+        }
+    private:
+        int m_col;
+        int m_row;
+        int ** m_matrix;
+
 };
 
-int main(){
-    //creates the matrices
-    int a[2][2] = {{6,4},{8,3}};
-    int b[2][3] = {{1,2,3},{4,5,6}};
-    int c[3][2] = {{2,1},{4,3},{6,5}};
-    int d[2][2] = {0};
-    matrixFunctions func;
-    //multiplies 3 and b
-    func.multiplyMatrixByInt(3, b, 2, 3);
-    //multiplies b and c
-    func.multiplyMatrices(b, c, 2, 3, 3, 2, d);
-    //adds together the multiple of b and c with a to produce d
-    func.addMatrices(d, a, 2, 2);
-    
-    //prints d
-    for(int i = 0; i < 2; i++){
-        for(int j = 0; j < 2; j++){
-            printf("%i ", d[i][j]);
-        } 
-        printf("\n");  
+void printMatrix(const matrix &matrix){
+    for(int i = 0; i < matrix.getRow(); i++){
+        for(int j = 0; j < matrix.getCol(); j++){
+            int value = matrix.getElement(i,j);
+            printf("%d ", value);
+        }
+        printf("\n");
     }
+}
+
+int main(){
+    matrix a = matrix(2,2,0);
+    matrix b = matrix(2,3,0);
+    matrix c = matrix(3,2,0);
+    a.setValuesForA();
+    b.setValuesForB();
+    c.setValuesForC();
+    b.multMatrixByInt(3);
+    matrix d = matrix();
+    d.multiplyMatrices(b,c);
+    d.addMatrices(a);
+    printMatrix(d);
+     
+    
     return 0;
+    
 }
