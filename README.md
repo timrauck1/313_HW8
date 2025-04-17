@@ -12,7 +12,7 @@ BUILD INSTRUCTIONS:
 
 C++- created a matrix class that creates matrix objects with integer values for column and row sizes. Then created functions that allow for the matrix equations to be done to the matrix objects.
 
-C-
+C- create a matrix object with column and row values using struct. Recreated the functions in the C++ file, but make slight changes like how memory is allocated and deallocated.
 
 TESTING METHODOLOGY: Inputed the values for a,b, and c and did the matrix equations to create d, then printed out d to see if the equations were correct.
 
